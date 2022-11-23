@@ -10,6 +10,9 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
+    static void save(User user) {
+    }
+
     List<User> listByCondition(UserPageRequest userPageRequest);
 
     //@Select("select * from user")
