@@ -15,7 +15,7 @@ public class UserService implements IUserService {
     UserMapper userMapper;
 
     @Override
-    public List<User> listUsers() {
-        return userMapper.listUsers();
+    public List<User> list() {
+        return userMapper.list();
     }
 }
