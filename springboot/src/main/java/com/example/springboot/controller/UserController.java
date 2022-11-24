@@ -18,7 +18,7 @@ public class UserController {
     IUserService userService;
     @GetMapping("/add")
     public Result save(@RequestBody User user){
-        UserService.save();
+        userService.save(user);
         return Result.success();
     }
     @GetMapping("/list")
@@ -26,7 +26,7 @@ public class UserController {
         List<User> users = userService.list();
         return Result.success(users);
     }
-
+    @GetMapping("/page")
     public Result page(UserPageRequest userPageRequest){
         userService.page(userPageRequest);
         return Result.success(userService.page(userPageRequest));
