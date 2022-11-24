@@ -21,6 +21,10 @@ public class UserController {
         userService.save(user);
         return Result.success();
     }
+    public Result getById(@PathVariable int id){
+        User user = userService.getById();
+        return Result.success(user);
+    }
     @GetMapping("/list")
     public Result list(){
         List<User> users = userService.list();

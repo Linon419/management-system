@@ -10,4 +10,6 @@ public interface IUserService {
 
     Object page(UserPageRequest userPageRequest);
     void save(User user);
+
+    User getById(int id);
 }
