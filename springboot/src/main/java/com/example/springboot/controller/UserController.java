@@ -9,14 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
     @Autowired
     IUserService userService;
-    @GetMapping("/add")
+    @PostMapping("/add")
     public Result save(@RequestBody User user){
         userService.save(user);
         return Result.success();

@@ -1,5 +1,7 @@
 package com.example.springboot.service.impl;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.IdUtil;
 import com.example.springboot.controller.request.UserPageRequest;
 import com.example.springboot.entity.User;
 import com.example.springboot.mapper.UserMapper;
@@ -9,6 +11,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -35,6 +38,8 @@ public class UserService implements IUserService {
 
     @Override
     public void save(User user) {
-        UserMapper.save(user);
+        Date date = new Date();
+        user.setUsername(DateUtil.format(date,"dd/mm/yyyy")+IdUtil.fastSimpleUUID());
+        userMapper.save(user);
     }
 }
