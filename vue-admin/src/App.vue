@@ -36,7 +36,7 @@
               <span>会员管理</span>
             </template>
             <el-menu-item index="/addUser">会员添加</el-menu-item>
-            <el-menu-item index="/user">会员列表</el-menu-item>
+            <el-menu-item index="/userList">会员列表</el-menu-item>
           </el-submenu>
           <el-submenu index="admin">
             <template slot="title">

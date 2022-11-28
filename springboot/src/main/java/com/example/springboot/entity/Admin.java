@@ -6,14 +6,11 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class User {
+public class Admin {
     private int id;
-    private String name;
     private String username;
-    private int age;
-    private String sex;
+    private String password;
     private String phone;
-    private String address;
     @JsonFormat(pattern = "dd-mm-yyyy", timezone = "GTM+11")
     private Date createtime;
     @JsonFormat(pattern = "dd-mm-yyyy", timezone = "GTM+11")

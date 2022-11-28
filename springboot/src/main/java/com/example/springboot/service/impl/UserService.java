@@ -2,6 +2,7 @@ package com.example.springboot.service.impl;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.IdUtil;
+import com.example.springboot.controller.request.BaseRequest;
 import com.example.springboot.controller.request.UserPageRequest;
 import com.example.springboot.entity.User;
 import com.example.springboot.mapper.UserMapper;
@@ -28,23 +29,34 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Object page(UserPageRequest userPageRequest) {
+    public PageInfo<User> page(BaseRequest baseRequest) {
 //        String name = userPageRequest.getName();
 //        String phone  = userPageRequest.getPhone();
-        PageHelper.startPage(userPageRequest.pageNum,userPageRequest.pageSize);
-        List<User> users = userMapper.listByCondition(userPageRequest);
+        PageHelper.startPage(baseRequest.pageNum,baseRequest.pageSize);
+        List<User> users = userMapper.listByCondition(baseRequest);
         return new PageInfo<>(users);
     }
 
     @Override
     public void save(User user) {
         Date date = new Date();
-        user.setUsername(DateUtil.format(date,"ddmmyyyy")+IdUtil.fastSimpleUUID());
+        user.setUsername(DateUtil.format(date,"ddmmyyyy")+Math.abs(IdUtil.fastSimpleUUID().hashCode()));
         userMapper.save(user);
     }
 
     @Override
     public User getById( int id) {
          return userMapper.getById(id);
+    }
+
+    @Override
+    public void update(User user) {
+        user.setUpdatetime(new Date());
+        userMapper.updateById(user);
+    }
+
+    @Override
+    public void deleteById(int id) {
+        userMapper.deleteById(id);
     }
 }

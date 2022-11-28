@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -21,8 +20,19 @@ public class UserController {
         userService.save(user);
         return Result.success();
     }
+    @PutMapping("/update")
+    public Result update(@RequestBody User user){
+        userService.update(user);
+        return Result.success();
+    }
+    @DeleteMapping("/delete/{id}")
+    public Result delete(@PathVariable int id){
+        userService.deleteById(id);
+        return Result.success();
+    }
+    @GetMapping("/{id}")
     public Result getById(@PathVariable int id){
-        User user = userService.getById();
+        User user = userService.getById(id);
         return Result.success(user);
     }
     @GetMapping("/list")
