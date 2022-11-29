@@ -1,5 +1,7 @@
 package com.example.springboot.service.impl;
 
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.SecureUtil;
 import com.example.springboot.controller.dto.LoginDTO;
 import com.example.springboot.controller.request.BaseRequest;
 import com.example.springboot.controller.request.LoginRequest;
@@ -9,6 +11,7 @@ import com.example.springboot.mapper.AdminMapper;
 import com.example.springboot.service.IAdminService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,8 @@ import java.util.List;
 @Slf4j
 @Service
 public class AdminService implements IAdminService {
+    private static final String DEFAULT_PASS = "admin";
+    private static final String PASS_SALT = "123";
 
     @Autowired
     AdminMapper adminMapper;
@@ -43,6 +48,10 @@ public class AdminService implements IAdminService {
 
     @Override
     public void save(Admin admin) {
+        if (StrUtil.isBlank(admin.getPassword())){
+            admin.setPassword(DEFAULT_PASS);
+        }
+        admin.setPassword(securePass(admin.getPassword()));
         adminMapper.save(admin);
     }
 
@@ -65,6 +74,7 @@ public class AdminService implements IAdminService {
     @Override
     public LoginDTO login(LoginRequest request) {
         try {
+            request.setPassword(securePass(request.getPassword()));
             Admin admin = adminMapper.getByUsernameAndPassword(request);
             if (admin == null){
                 throw new ServiceException("Wrong username or password");
@@ -77,5 +87,9 @@ public class AdminService implements IAdminService {
             log.error("Login error");
             return null;
         }
+    }
+
+    public String securePass(String password){
+        return SecureUtil.md5(password + PASS_SALT);
     }
 }
