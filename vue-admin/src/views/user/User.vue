@@ -2,22 +2,22 @@
   <div>
     <!-- Search-->
     <div style="margin-bottom: 20px">
-      <el-input style="width: 240px" placeholder="Please input name" v-model="params.name"></el-input>
-      <el-input style="width: 240px; margin-left: 5px" placeholder="Please input phone number" v-model="params.phone"></el-input>
+      <el-input style="width: 240px" placeholder=" name" v-model="params.name"></el-input>
+      <el-input style="width: 240px; margin-left: 5px" placeholder="phone number" v-model="params.phone"></el-input>
       <el-button style="margin-left: 5px" type="primary" @click="load"><i class="el-icon-search"></i> Search</el-button>
       <el-button style="margin-left: 5px" type="warning" @click="reset"><i class="el-icon-refresh"></i> Reset</el-button>
     </div>
 
     <el-table :data="tableData" stripe>
-      <el-table-column prop="id" label="编号" width="80"></el-table-column>
-      <el-table-column prop="username" label="会员卡号"></el-table-column>
-      <el-table-column prop="name" label="名称"></el-table-column>
-      <el-table-column prop="age" label="年龄"></el-table-column>
-      <el-table-column prop="address" label="地址"></el-table-column>
-      <el-table-column prop="phone" label="联系方式"></el-table-column>
-      <el-table-column prop="sex" label="性别"></el-table-column>
-      <el-table-column prop="account" label="账户积分"></el-table-column>
-      <el-table-column label="状态" width="230">
+      <el-table-column prop="id" label="ID" width="80"></el-table-column>
+      <el-table-column prop="username" label="Card Number"></el-table-column>
+      <el-table-column prop="name" label="Name"></el-table-column>
+      <el-table-column prop="age" label="Age"></el-table-column>
+      <el-table-column prop="address" label="Address"></el-table-column>
+      <el-table-column prop="phone" label="Phone"></el-table-column>
+      <el-table-column prop="sex" label="Gender"></el-table-column>
+      <el-table-column prop="account" label="Credit"></el-table-column>
+      <el-table-column label="Status" width="230">
         <template v-slot="scope">
           <el-switch
               v-model="scope.row.status"
@@ -27,20 +27,20 @@
           </el-switch>
         </template>
       </el-table-column>
-      <el-table-column prop="createtime" label="创建时间"></el-table-column>
-      <el-table-column prop="updatetime" label="更新时间"></el-table-column>
+      <el-table-column prop="createtime" label="Create Time"></el-table-column>
+      <el-table-column prop="updatetime" label="Update Time"></el-table-column>
 
-      <el-table-column label="操作" width="230">
+      <el-table-column label="Operation" width="230">
         <template v-slot="scope">
           <!--          scope.row 就是当前行数据-->
-          <el-button type="warning" @click="handleAccountAdd(scope.row)">充值</el-button>
-          <el-button type="primary" @click="$router.push('/editUser?id=' + scope.row.id)">编辑</el-button>
+          <el-button type="warning" @click="handleAccountAdd(scope.row)">Charge</el-button>
+          <el-button type="primary" @click="$router.push('/editUser?id=' + scope.row.id)">Edit</el-button>
           <el-popconfirm
               style="margin-left: 5px"
-              title="您确定删除这行数据吗？"
+              title="Are you sure delete this data"
               @confirm="del(scope.row.id)"
           >
-            <el-button type="danger" slot="reference">删除</el-button>
+            <el-button type="danger" slot="reference">Delete</el-button>
           </el-popconfirm>
         </template>
       </el-table-column>
@@ -58,18 +58,18 @@
       </el-pagination>
     </div>
 
-    <el-dialog title="充值" :visible.sync="dialogFormVisible" width="30%">
+    <el-dialog title="Charge" :visible.sync="dialogFormVisible" width="30%">
       <el-form :model="form" label-width="100px" ref="ruleForm" :rules="rules" style="width: 85%">
-        <el-form-item label="当前账户积分" prop="account">
+        <el-form-item label="Current credit" prop="account">
           <el-input disabled v-model="form.account" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="积分" prop="score">
+        <el-form-item label="credit" prop="score">
           <el-input v-model="form.score" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addAccount">确 定</el-button>
+        <el-button @click="dialogFormVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="addAccount">Confirm</el-button>
       </div>
     </el-dialog>
 
@@ -150,7 +150,7 @@ export default {
     del(id) {
       request.delete("/user/delete/" + id).then(res => {
         if (res.code === '200') {
-          this.$notify.success('删除成功')
+          this.$notify.success('delete successful')
           this.load()
         } else {
           this.$notify.error(res.msg)
@@ -166,7 +166,7 @@ export default {
         if (valid) {
           request.post('/user/account', this.form).then(res => {
             if (res.code === '200') {
-              this.$notify.success('充值成功')
+              this.$notify.success('Charge successful')
               this.dialogFormVisible = false
               this.load()
             } else {
