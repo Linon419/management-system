@@ -25,4 +25,6 @@ public interface AdminMapper {
     void deleteById(int id);
 
     Admin getByUsernameAndPassword(LoginRequest request);
+
+    Admin getByUsername(String username);
 }

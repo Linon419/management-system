@@ -1,8 +1,10 @@
 package com.example.springboot.controller;
 
 import com.example.springboot.common.Result;
+import com.example.springboot.controller.dto.LoginDTO;
 import com.example.springboot.controller.request.AdminPageRequest;
 import com.example.springboot.controller.request.LoginRequest;
+import com.example.springboot.controller.request.PasswordRequest;
 import com.example.springboot.controller.request.UserPageRequest;
 import com.example.springboot.entity.Admin;
 import com.example.springboot.service.IAdminService;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+@CrossOrigin
 
 @RestController
 @RequestMapping("/admin")
@@ -20,8 +23,8 @@ public class AdminController {
     IAdminService adminService;
     @PostMapping("/login")
     public Result login(@RequestBody LoginRequest request){
-
-        return Result.success(adminService.login(request));
+        LoginDTO login = adminService.login(request);
+        return Result.success(login);
     }
     @PostMapping("/add")
     public Result save(@RequestBody Admin admin){
@@ -31,6 +34,11 @@ public class AdminController {
     @PutMapping("/update")
     public Result update(@RequestBody Admin admin){
         adminService.update(admin);
+        return Result.success();
+    }
+    @PutMapping("/password")
+    public Result password(@RequestBody PasswordRequest request){
+        adminService.changePass(request);
         return Result.success();
     }
     @DeleteMapping("/delete/{id}")

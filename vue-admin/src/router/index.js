@@ -69,7 +69,7 @@ const routes = [
       { path: 'addBorrow', name: 'AddBorrow', component: () => import('@/views/borrow/Add.vue') },
       { path: 'editBorrow', name: 'EditBorrow', component: () => import('@/views/borrow/Edit.vue') },
       //  ====  Return  ====
-      { path: 'returList', name: 'returList', component: () => import('@/views/retur/List.vue') },
+      { path: 'returList', name: 'returList', component: () => import('@/views/return/List.vue') },
     ]
   },
   {

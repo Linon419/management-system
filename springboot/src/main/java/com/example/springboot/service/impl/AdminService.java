@@ -5,16 +5,18 @@ import cn.hutool.crypto.SecureUtil;
 import com.example.springboot.controller.dto.LoginDTO;
 import com.example.springboot.controller.request.BaseRequest;
 import com.example.springboot.controller.request.LoginRequest;
+import com.example.springboot.controller.request.PasswordRequest;
 import com.example.springboot.entity.Admin;
 import com.example.springboot.exception.ServiceException;
 import com.example.springboot.mapper.AdminMapper;
 import com.example.springboot.service.IAdminService;
+import com.example.springboot.utils.TokenUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.github.pagehelper.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -48,11 +50,17 @@ public class AdminService implements IAdminService {
 
     @Override
     public void save(Admin admin) {
-        if (StrUtil.isBlank(admin.getPassword())){
+        // 默认密码 123
+        if (StrUtil.isBlank(admin.getPassword())) {
             admin.setPassword(DEFAULT_PASS);
         }
-        admin.setPassword(securePass(admin.getPassword()));
-        adminMapper.save(admin);
+        admin.setPassword(securePass(admin.getPassword()));  // 设置md5加密，加盐
+        try {
+            adminMapper.save(admin);
+        } catch (DuplicateKeyException e) {
+            log.error("数据插入失败， username:{}", admin.getUsername(), e);
+            throw new ServiceException("用户名重复");
+        }
     }
 
     @Override
@@ -73,20 +81,36 @@ public class AdminService implements IAdminService {
 
     @Override
     public LoginDTO login(LoginRequest request) {
+        Admin admin = null;
         try {
-            request.setPassword(securePass(request.getPassword()));
-            Admin admin = adminMapper.getByUsernameAndPassword(request);
-            if (admin == null){
-                throw new ServiceException("Wrong username or password");
-            }
-            LoginDTO loginDTO = new LoginDTO();
-            BeanUtils.copyProperties(admin,loginDTO);
-            return loginDTO;
-
-        }catch (Exception e){
-            log.error("Login error");
-            return null;
+            admin = adminMapper.getByUsername(request.getUsername());
+        } catch (Exception e) {
+            log.error("根据用户名{} 查询出错", request.getUsername());
+            throw new ServiceException("用户名错误");
         }
+        if (admin == null) {
+            throw new ServiceException("用户名或密码错误");
+        }
+        // 判断密码是否合法
+        String securePass = securePass(request.getPassword());
+        if (!securePass.equals(admin.getPassword())) {
+            throw new ServiceException("用户名或密码错误");
+        }
+        if (!admin.isStatus()) {
+            throw new ServiceException("当前用户处于禁用状态，请联系管理员");
+        }
+        LoginDTO loginDTO = new LoginDTO();
+        BeanUtils.copyProperties(admin, loginDTO);
+
+        // 生成token
+        String token = TokenUtils.genToken(String.valueOf(admin.getId()), admin.getPassword());
+        loginDTO.setToken(token);
+        return loginDTO;
+    }
+
+    @Override
+    public void changePass(PasswordRequest request) {
+
     }
 
     public String securePass(String password){

@@ -11,6 +11,8 @@ public class User {
     private String name;
     private String username;
     private int age;
+    private Integer account;
+    private Integer score;
     private String sex;
     private String phone;
     private String address;
@@ -18,5 +20,7 @@ public class User {
     private Date createtime;
     @JsonFormat(pattern = "dd-mm-yyyy", timezone = "GTM+11")
     private Date updatetime;
+    private boolean status;
+
 
 }

@@ -1,17 +1,18 @@
 <template>
   <div style="height: 100vh; overflow: hidden; position: relative">
-    <el-card class="cover" v-if="loginAdmin.id">
+    <!-- <el-card class="cover" v-if="loginAdmin.id">
       <slide-verify :l="42"
                     :r="10"
                     :w="310"
                     :h="155"
                     :accuracy="5"
-                    slider-text="向右滑动"
+                    :imgs="['./assets/img.jpeg']"
+                    :slider-text="RightSlide"
                     @success="onSuccess"
                     @fail="onFail"
                     @refresh="onRefresh"
       ></slide-verify>
-    </el-card>
+    </el-card> -->
 
     <div style="width: 500px; height: 400px; background-color: white; border-radius: 10px;
         margin: 150px auto; padding:50px">
@@ -60,6 +61,9 @@ export default {
           request.post('/admin/login', this.admin).then(res => {
             if (res.code === '200') {
               this.loginAdmin = res.data  // 滑块组件就出现了
+              Cookies.set('admin', JSON.stringify(this.loginAdmin))
+              this.$notify.success("登录成功")
+              this.$router.push('/')
             } else {
               this.$notify.error(res.msg)
             }
