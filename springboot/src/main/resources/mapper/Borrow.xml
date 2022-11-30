@@ -20,7 +20,7 @@
         order by id desc
     </select>
 
-    <select id="listReturByCondition" resultType="com.example.springboot.entity.Retur">
+    <select id="listReturByCondition" resultType="com.example.springboot.entity.Return">
         select * from retur
         <where>
             <if test="bookName != null and bookName != ''">
@@ -72,7 +72,7 @@
         select * from borrow where id = #{id}
     </select>
 
-    <select id="getCountByTimeRange" resultType="com.example.springboot.mapper.po.BorrowReturCountPO">
+    <select id="getCountByTimeRange" resultType="com.example.springboot.mapper.po.BorrowReturnCountPO">
         select count(id) as count, DATE_FORMAT(createtime,'%Y-%m-%d') as date from
         <if test="type == 1">
             borrow
