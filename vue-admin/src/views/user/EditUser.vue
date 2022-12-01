@@ -6,24 +6,24 @@
         <el-input v-model="form.username" disabled></el-input>
       </el-form-item>
       <el-form-item label="姓名">
-        <el-input v-model="form.name" placeholder="请输入姓名"></el-input>
+        <el-input v-model="form.name" placeholder="Name"></el-input>
       </el-form-item>
       <el-form-item label="年龄">
-        <el-input v-model="form.age" placeholder="请输入年龄"></el-input>
+        <el-input v-model="form.age" placeholder="Age"></el-input>
       </el-form-item>
       <el-form-item label="性别">
-        <el-input v-model="form.sex" placeholder="请输入性别"></el-input>
+        <el-input v-model="form.sex" placeholder="Gender"></el-input>
       </el-form-item>
       <el-form-item label="联系方式">
-        <el-input v-model="form.phone" placeholder="请输入联系方式"></el-input>
+        <el-input v-model="form.phone" placeholder="Phone"></el-input>
       </el-form-item>
       <el-form-item label="地址">
-        <el-input v-model="form.address" placeholder="请输入地址"></el-input>
+        <el-input v-model="form.address" placeholder="Address"></el-input>
       </el-form-item>
     </el-form>
 
     <div style="text-align: center; margin-top: 30px">
-      <el-button type="primary" @click="save" size="medium">提交</el-button>
+      <el-button type="primary" @click="save" size="medium">Submit</el-button>
     </div>
   </div>
 </template>
@@ -48,7 +48,7 @@ export default {
     save() {
       request.put('/user/update', this.form).then(res => {
         if (res.code === '200') {
-          this.$notify.success('更新成功')
+          this.$notify.success('update successful')
           this.$router.push("/userList")
         } else {
           this.$notify.error(res.msg)

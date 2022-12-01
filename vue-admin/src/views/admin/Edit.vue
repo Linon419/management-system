@@ -1,20 +1,20 @@
 <template>
   <div style="width: 80%">
-    <div style="margin-bottom: 30px">编辑管理员</div>
+    <div style="margin-bottom: 30px">Edit admin</div>
     <el-form :inline="true" :model="form" label-width="100px">
-      <el-form-item label="用户名" prop="username">
-        <el-input v-model="form.username" placeholder="请输入姓名"></el-input>
+      <el-form-item label="user name" prop="username">
+        <el-input v-model="form.username" placeholder="user name"></el-input>
       </el-form-item>
-      <el-form-item label="联系方式" prop="phone">
-        <el-input v-model="form.phone" placeholder="请输入联系方式"></el-input>
+      <el-form-item label="phone" prop="phone">
+        <el-input v-model="form.phone" placeholder="phone"></el-input>
       </el-form-item>
-      <el-form-item label="邮箱">
-        <el-input v-model="form.email" placeholder="请输入地址"></el-input>
+      <el-form-item label="email" prop = "email">
+        <el-input v-model="form.email" placeholder="email"></el-input>
       </el-form-item>
     </el-form>
 
     <div style="text-align: center; margin-top: 30px">
-      <el-button type="primary" @click="save" size="medium">提交</el-button>
+      <el-button type="primary" @click="save" size="medium">Submit</el-button>
     </div>
   </div>
 </template>
@@ -39,7 +39,7 @@ export default {
     save() {
       request.put('/admin/update', this.form).then(res => {
         if (res.code === '200') {
-          this.$notify.success('更新成功')
+          this.$notify.success('update successful')
           this.$router.push("/adminList")
         } else {
           this.$notify.error(res.msg)

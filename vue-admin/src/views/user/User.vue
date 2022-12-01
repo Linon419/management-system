@@ -85,7 +85,7 @@ export default {
     const checkNums = (rule, value, callback) => {
       value = parseInt(value)
       if (value < 10 || value > 200) {
-        callback(new Error('请输入大于等于10小于或等于200的整数'));
+        callback(new Error('Wrong number'));
       }
       callback()
     };
@@ -102,7 +102,7 @@ export default {
       form: {},
       rules: {
         score: [
-          { required: true, message: '请输入积分', trigger: 'blur'},
+          { required: true, message: 'Enter credit', trigger: 'blur'},
           { validator: checkNums, trigger: 'blur'}
         ]
       }
@@ -115,7 +115,7 @@ export default {
     changeStatus(row) {
       request.put('/user/update', row).then(res => {
         if (res.code === '200') {
-          this.$notify.success('操作成功')
+          this.$notify.success('successful')
           this.load()
         } else {
           this.$notify.error(res.msg)

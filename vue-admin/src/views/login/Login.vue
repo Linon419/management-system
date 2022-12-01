@@ -44,12 +44,12 @@ export default {
       admin: {},
       rules: {
         username: [
-          { required: true, message: '请输入用户名', trigger: 'blur'},
-          { min: 3, max: 10, message: '长度在3-10个字符', trigger: 'blur'}
+          { required: true, message: 'user name', trigger: 'blur'},
+          { min: 3, max: 10, message: '3-10 characters', trigger: 'blur'}
         ],
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur'},
-          { min: 3, max: 10, message: '长度在3-10个字符', trigger: 'blur'}
+          { required: true, message: 'password', trigger: 'blur'},
+          { min: 3, max: 10, message: '3-10 characters', trigger: 'blur'}
         ]
       }
     }
@@ -60,9 +60,9 @@ export default {
         if (valid) {
           request.post('/admin/login', this.admin).then(res => {
             if (res.code === '200') {
-              this.loginAdmin = res.data  // 滑块组件就出现了
+              this.loginAdmin = res.data
               Cookies.set('admin', JSON.stringify(this.loginAdmin))
-              this.$notify.success("登录成功")
+              this.$notify.success("Login successful")
               this.$router.push('/')
             } else {
               this.$notify.error(res.msg)
@@ -71,9 +71,9 @@ export default {
         }
       })
     },
-    onSuccess() { // 滑块验证通过之后触发的
+    onSuccess() {
       Cookies.set('admin', JSON.stringify(this.loginAdmin))
-      this.$notify.success("登录成功")
+      this.$notify.success("Login successful")
       this.$router.push('/')
     },
     onFail() {
