@@ -31,7 +31,7 @@
       </el-table-column>
       <el-table-column label="management">
         <template v-slot="scope">
-          <el-button type="primary" @click="returnBooks(scope.row)" v-if="scope.row.status === '已借出'">return books</el-button>
+          <el-button type="primary" @click="returnBooks(scope.row)" v-if="scope.row.status === 'lent'">return books</el-button>
         </template>
       </el-table-column>
       <el-table-column label="operation">
