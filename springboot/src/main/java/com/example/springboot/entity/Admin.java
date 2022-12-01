@@ -11,6 +11,7 @@ public class Admin {
     private String username;
     private String password;
     private String phone;
+    private String email;
     @JsonFormat(pattern = "dd-mm-yyyy", timezone = "GTM+11")
     private Date createtime;
     @JsonFormat(pattern = "dd-mm-yyyy", timezone = "GTM+11")

@@ -1,23 +1,23 @@
 <template>
   <div style="width: 80%">
-    <div style="margin-bottom: 30px">编辑用户</div>
+    <div style="margin-bottom: 30px">Edit User</div>
     <el-form :inline="true" :model="form" label-width="100px">
-      <el-form-item label="卡号">
+      <el-form-item label="card number">
         <el-input v-model="form.username" disabled></el-input>
       </el-form-item>
-      <el-form-item label="姓名">
+      <el-form-item label="name">
         <el-input v-model="form.name" placeholder="Name"></el-input>
       </el-form-item>
-      <el-form-item label="年龄">
+      <el-form-item label="age">
         <el-input v-model="form.age" placeholder="Age"></el-input>
       </el-form-item>
-      <el-form-item label="性别">
+      <el-form-item label="gender">
         <el-input v-model="form.sex" placeholder="Gender"></el-input>
       </el-form-item>
-      <el-form-item label="联系方式">
+      <el-form-item label="Phone">
         <el-input v-model="form.phone" placeholder="Phone"></el-input>
       </el-form-item>
-      <el-form-item label="地址">
+      <el-form-item label="address">
         <el-input v-model="form.address" placeholder="Address"></el-input>
       </el-form-item>
     </el-form>

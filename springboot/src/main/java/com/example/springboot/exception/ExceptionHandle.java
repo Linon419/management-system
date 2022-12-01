@@ -12,7 +12,7 @@ public class ExceptionHandle {
 
     @ExceptionHandler(value = ServiceException.class)
     public Result serviceExceptionError(ServiceException e) {
-        log.error("业务异常", e);
+        log.error("service exception", e);
         String code = e.getCode();
 //        if (StrUtil.isNotBlank(code)) {
 //            return Result.error(code, e.getMessage());
@@ -22,7 +22,7 @@ public class ExceptionHandle {
 
     @ExceptionHandler(value = Exception.class)
     public Result exceptionError(Exception e) {
-        log.error("系统错误", e);
-        return Result.error("系统错误");
+        log.error("system exception", e);
+        return Result.error("system exception");
     }
 }
