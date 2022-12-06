@@ -85,19 +85,19 @@ public class AdminService implements IAdminService {
         try {
             admin = adminMapper.getByUsername(request.getUsername());
         } catch (Exception e) {
-            log.error("根据用户名{} 查询出错", request.getUsername());
-            throw new ServiceException("用户名错误");
+            log.error("username error", request.getUsername());
+            throw new ServiceException("username error");
         }
         if (admin == null) {
-            throw new ServiceException("用户名或密码错误");
+            throw new ServiceException("username or password error");
         }
         // 判断密码是否合法
         String securePass = securePass(request.getPassword());
         if (!securePass.equals(admin.getPassword())) {
-            throw new ServiceException("用户名或密码错误");
+            throw new ServiceException("username or password error");
         }
         if (!admin.isStatus()) {
-            throw new ServiceException("当前用户处于禁用状态，请联系管理员");
+            throw new ServiceException("Account banned");
         }
         LoginDTO loginDTO = new LoginDTO();
         BeanUtils.copyProperties(admin, loginDTO);
